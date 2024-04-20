@@ -12,15 +12,16 @@ public class Main {
             while (isRunning) {
                 System.out.println("""
                         
-                        Welcome to the Account Ledger Application. Please enter a choice:
+                        Welcome to the Account Ledger Application. What would you like to do today?
+                        
                         [E]Add Expense (credit)
                         [P]Make Payment (debit)
                         [L]Ledger
-                        [X]Exit""");
+                        [X]Exit
+                        """);
                 String input = scanner.nextLine();
                 switch (input) {
                     case "E", "e":
-                        System.out.println("Adding Expense ...\n\n");
                         String[] collectedDepositInfo = collectInfo(scanner);
                         Ledger.addExpense(collectedDepositInfo);
                         break;

@@ -204,7 +204,19 @@ public class Ledger {
         String vendor = depositInfo[1];
         double amount = Double.parseDouble(depositInfo[2]);
         String info = String.format("%s|%s|%s|-%.2f\n", formattedDate, description, vendor, amount);
-        enterInfoIntoLedger(info);
+        try {
+            enterInfoIntoLedger(info);
+            Thread.sleep(1000);
+            System.out.print("\n...");
+            Thread.sleep(1000);
+            System.out.print("...");
+            Thread.sleep(1000);
+            System.out.print("...");
+            Thread.sleep(1000);
+            System.out.println("\n\nSuccessfully added expense!\n\n");
+        } catch (Exception e) {
+            throw new RuntimeException("Sorry there was an issue entering your expense" + e);
+        }
     }
 
 
@@ -217,7 +229,19 @@ public class Ledger {
         String vendor = paymentInfo[1];
         double amount = Double.parseDouble(paymentInfo[2]);
         String info = String.format("%s|%s|%s|%.2f\n", formattedDate, description, vendor, amount);
-        enterInfoIntoLedger(info);
+        try {
+            enterInfoIntoLedger(info);
+            Thread.sleep(1000);
+            System.out.print("\n...");
+            Thread.sleep(1000);
+            System.out.print("...");
+            Thread.sleep(1000);
+            System.out.print("...");
+            Thread.sleep(1000);
+            System.out.println("\n\nSuccessfully added payment!\n\n");
+        } catch (Exception e) {
+            throw new RuntimeException("Sorry there was an issue entering your payment" + e);
+        }
     }
 
 
