@@ -4,9 +4,7 @@ import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Ledger {
 
@@ -49,6 +47,56 @@ public class Ledger {
     }
 
 
+    public static void addExpense(String[] depositInfo) {
+//        date | time | description | vendor | amount
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd|HH:mm:ss");
+        LocalDateTime dt = LocalDateTime.now();
+        String formattedDate = dt.format(formatter);
+        String description = depositInfo[0];
+        String vendor = depositInfo[1];
+        double amount = Double.parseDouble(depositInfo[2]);
+        String info = String.format("%s|%s|%s|-%.2f\n", formattedDate, description, vendor, amount);
+        try {
+            enterInfoIntoLedger(info);
+            Thread.sleep(1000);
+            System.out.print("\n...");
+            Thread.sleep(1000);
+            System.out.print("...");
+            Thread.sleep(1000);
+            System.out.print("...");
+            Thread.sleep(1000);
+            System.out.println("\n\nSuccessfully added expense!\n\n");
+        } catch (Exception e) {
+            throw new RuntimeException("Sorry there was an issue entering your expense" + e);
+        }
+    }
+
+
+    public static void addPayment(String[] paymentInfo) {
+//        date | time | description | vendor | amount
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd|HH:mm:ss");
+        LocalDateTime dt = LocalDateTime.now();
+        String formattedDate = dt.format(formatter);
+        String description = paymentInfo[0];
+        String vendor = paymentInfo[1];
+        double amount = Double.parseDouble(paymentInfo[2]);
+        String info = String.format("%s|%s|%s|%.2f\n", formattedDate, description, vendor, amount);
+        try {
+            enterInfoIntoLedger(info);
+            Thread.sleep(1000);
+            System.out.print("\n...");
+            Thread.sleep(1000);
+            System.out.print("...");
+            Thread.sleep(1000);
+            System.out.print("...");
+            Thread.sleep(1000);
+            System.out.println("\n\nSuccessfully added payment!\n\n");
+        } catch (Exception e) {
+            throw new RuntimeException("Sorry there was an issue entering your payment" + e);
+        }
+    }
+
+
     private static List<String> getLedgerData() {
         List<String> ledgerData = new ArrayList<>();
         try (FileReader reader = new FileReader("ledger/transactions.csv")) {
@@ -62,6 +110,7 @@ public class Ledger {
         }
         return ledgerData;
     }
+
 
     private static void getLedgerData(String filter) {
         List<String> ledgerData = new ArrayList<>();
@@ -111,6 +160,7 @@ public class Ledger {
         }
     }
 
+
     private static void displayLedgerData(List<String> ledgerData) {
         for (String transaction : ledgerData) {
             if (transaction != null) {
@@ -118,6 +168,7 @@ public class Ledger {
             }
         }
     }
+
 
     private static void customReports(Scanner scanner) {
         boolean isRunning = true;
@@ -130,6 +181,7 @@ public class Ledger {
                 [3] Year to date
                 [4] Previous year
                 [5] Search by vendor
+                [6] Custom search...
                 [0] Previous screen
                 """);
             int customReportChoice = scanner.nextInt();
@@ -183,6 +235,42 @@ public class Ledger {
                         }
                     }
                     break;
+                case 6:
+                    Map<String, String> searchCriteria = new HashMap<>();
+                    System.out.println("\n-----------------------------------------------------------");
+                    System.out.println("If you do not want to search for a field, enter nothing...");
+                    System.out.println("-----------------------------------------------------------\n");
+                    System.out.print("Please enter a Start Date (yyyy-mm-dd): ");
+                    String startDate = scanner.nextLine();
+                    if (!startDate.isEmpty()) {
+                        searchCriteria.put("startDate", startDate);
+                    }
+                    System.out.print("Please enter an End Date (yyyy-mm-dd): ");
+                    String endDate = scanner.nextLine();
+                    if (!endDate.isEmpty()) {
+                        searchCriteria.put("endDate", endDate);
+
+                    }
+                    System.out.print("Please enter a description to search for: ");
+                    String descriptionSearch = scanner.nextLine();
+                    if (!descriptionSearch.isEmpty()) {
+                        searchCriteria.put("descriptionSearch", descriptionSearch);
+
+                    }
+                    System.out.print("Please enter a vendor to search for: ");
+                    String vendorSearch = scanner.nextLine();
+                    if (!vendorSearch.isEmpty()) {
+                        searchCriteria.put("vendorSearch", vendorSearch);
+
+                    }
+                    System.out.print("Please enter a dollar amount to search for: $");
+                    String amountSearch = scanner.nextLine();
+                    if (!amountSearch.isEmpty()) {
+                        searchCriteria.put("amountSearch", amountSearch);
+                    }
+                    System.out.println(searchCriteria);
+                    customSearch(searchCriteria);
+                    break;
                 case 0:
                     isRunning = false;
                     break;
@@ -199,53 +287,14 @@ public class Ledger {
     }
 
 
-    public static void addExpense(String[] depositInfo) {
-//        date | time | description | vendor | amount
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd|HH:mm:ss");
-        LocalDateTime dt = LocalDateTime.now();
-        String formattedDate = dt.format(formatter);
-        String description = depositInfo[0];
-        String vendor = depositInfo[1];
-        double amount = Double.parseDouble(depositInfo[2]);
-        String info = String.format("%s|%s|%s|-%.2f\n", formattedDate, description, vendor, amount);
-        try {
-            enterInfoIntoLedger(info);
-            Thread.sleep(1000);
-            System.out.print("\n...");
-            Thread.sleep(1000);
-            System.out.print("...");
-            Thread.sleep(1000);
-            System.out.print("...");
-            Thread.sleep(1000);
-            System.out.println("\n\nSuccessfully added expense!\n\n");
-        } catch (Exception e) {
-            throw new RuntimeException("Sorry there was an issue entering your expense" + e);
-        }
-    }
-
-
-    public static void addPayment(String[] paymentInfo) {
-//        date | time | description | vendor | amount
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd|HH:mm:ss");
-        LocalDateTime dt = LocalDateTime.now();
-        String formattedDate = dt.format(formatter);
-        String description = paymentInfo[0];
-        String vendor = paymentInfo[1];
-        double amount = Double.parseDouble(paymentInfo[2]);
-        String info = String.format("%s|%s|%s|%.2f\n", formattedDate, description, vendor, amount);
-        try {
-            enterInfoIntoLedger(info);
-            Thread.sleep(1000);
-            System.out.print("\n...");
-            Thread.sleep(1000);
-            System.out.print("...");
-            Thread.sleep(1000);
-            System.out.print("...");
-            Thread.sleep(1000);
-            System.out.println("\n\nSuccessfully added payment!\n\n");
-        } catch (Exception e) {
-            throw new RuntimeException("Sorry there was an issue entering your payment" + e);
-        }
+    private static void customSearch(Map<String, String> searchCriteria) {
+//        depending on which search criteria were passed through, search ledger on all passed through criteria
+//        first, iterate through passed in search critera and assign values to variables.
+//        second, based on the search criteria, start filtering first by start date, then by end date, then description, then vendor, then amount.
+//          - If there is a way to search with all the critera at the same time I'm not aware of it at the moment.
+//          - If a transaction satisfies all criteria, add it to an arraylist.
+//              - If there are multiple transactions that satisfy the critera add all of them?
+//        finally, return the transactions in the list by iterating through them and sysout
     }
 
 
