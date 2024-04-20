@@ -33,7 +33,8 @@ public class Ledger {
                 [E] Display only expenses (credit)
                 [D] Display only payments (debit)
                 [R] Custom reports...
-                [H] Home"""
+                [H] Home
+                """
             );
             String input = scanner.nextLine();
             switch (input) {
@@ -42,9 +43,12 @@ public class Ledger {
                 case "D", "d" -> getLedgerData("payments");
                 case "R", "r" -> customReports(scanner);
                 case "H", "h" -> isRunning = false;
+                default -> System.out.println("Please enter a valid choice...");
             }
         }
     }
+
+
     private static List<String> getLedgerData() {
         List<String> ledgerData = new ArrayList<>();
         try (FileReader reader = new FileReader("ledger/transactions.csv")) {
@@ -197,7 +201,7 @@ public class Ledger {
 
     public static void addExpense(String[] depositInfo) {
 //        date | time | description | vendor | amount
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd | HH:mm:ss");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd|HH:mm:ss");
         LocalDateTime dt = LocalDateTime.now();
         String formattedDate = dt.format(formatter);
         String description = depositInfo[0];
@@ -222,7 +226,7 @@ public class Ledger {
 
     public static void addPayment(String[] paymentInfo) {
 //        date | time | description | vendor | amount
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd | HH:mm:ss");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd|HH:mm:ss");
         LocalDateTime dt = LocalDateTime.now();
         String formattedDate = dt.format(formatter);
         String description = paymentInfo[0];

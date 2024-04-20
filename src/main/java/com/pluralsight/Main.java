@@ -1,6 +1,5 @@
 package com.pluralsight;
 
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
@@ -23,15 +22,25 @@ public class Main {
                 switch (input) {
                     case "E", "e":
                         String[] collectedDepositInfo = collectInfo(scanner);
-                        Ledger.addExpense(collectedDepositInfo);
+                        if (collectedDepositInfo != null) {
+                            Ledger.addExpense(collectedDepositInfo);
+                        }
                         break;
                     case "P", "p":
-                        System.out.println("Making Payment ...\n\n");
                         String[] collectedPaymentInfo = collectInfo(scanner);
-                        Ledger.addPayment(collectedPaymentInfo);
+                        if (collectedPaymentInfo != null) {
+                            Ledger.addPayment(collectedPaymentInfo);
+                        }
                         break;
                     case "L", "l":
-                        System.out.println("Accessing Ledger ...\n\n");
+                        System.out.print("\nAccessing Ledger");
+                        Thread.sleep(1000);
+                        System.out.print("...");
+                        Thread.sleep(1000);
+                        System.out.print("...");
+                        Thread.sleep(1000);
+                        System.out.print("...\n");
+                        Thread.sleep(1000);
                         Ledger.homeScreen(scanner);
                         break;
                     case "X", "x":
@@ -42,8 +51,8 @@ public class Main {
                         System.out.println("That is not a valid input, please try again.");
                 }
             }
-        } catch (InputMismatchException e) {
-            throw new RuntimeException("Wrong input type. Please try again" + e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -54,9 +63,15 @@ public class Main {
         System.out.print("Enter vendor: ");
         String vendor = scanner.nextLine();
         System.out.print("Enter amount: $");
-        double amount = scanner.nextDouble();
-        scanner.nextLine();
-        return new String[]{description, vendor, Double.toString(amount)};
+        if (scanner.hasNextDouble()) {
+            double amount = scanner.nextDouble();
+            scanner.nextLine();
+            return new String[]{description, vendor, Double.toString(amount)};
+        } else {
+            scanner.nextLine();
+            System.out.println("\nSorry, this is not the correct input type.");
+            return null;
+        }
     }
 
 
