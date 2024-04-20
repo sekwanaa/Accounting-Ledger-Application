@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -117,7 +116,9 @@ public class Ledger {
     }
 
     private static void customReports(Scanner scanner) {
-        System.out.println("""
+        boolean isRunning = true;
+        while (isRunning) {
+            System.out.println("""
                 
                 Which custom report would you like to view?
                 [1] Month to date
@@ -127,26 +128,69 @@ public class Ledger {
                 [5] Search by vendor
                 [0] Previous screen
                 """);
-        int customReportChoice = scanner.nextInt();
-        switch (customReportChoice) {
-            case 1:
-                LocalDate date = LocalDate.now();
-                int month = date.getMonthValue();
-                List<String> ledger = getLedgerData();
+            int customReportChoice = scanner.nextInt();
+            scanner.nextLine();
 
-                break;
-            case 2:
-                break;
-            case 3:
-                break;
-            case 4:
-                break;
-            case 5:
-                break;
-            case 0:
-                break;
-            default:
-                System.out.println("Please select a valid option...");
+            LocalDate date = LocalDate.now();
+            int month = date.getMonthValue();
+            int year = date.getYear();
+            List<String> ledger = getLedgerData();
+            StringBuilder output = new StringBuilder();
+            switch (customReportChoice) {
+                case 1:
+                    for (String transaction : ledger) {
+                        LocalDate transactionDate = LocalDate.parse(transaction.split("\\|")[0]);
+                        if (transactionDate.getMonthValue() == month && transactionDate.getYear() == year) {
+                            output.append(transaction).append("\n");
+                        }
+                    }
+                    break;
+                case 2:
+                    for (String transaction : ledger) {
+                        LocalDate transactionDate = LocalDate.parse(transaction.split("\\|")[0]);
+                        if (transactionDate.getMonthValue() == month-1 && transactionDate.getYear() == year) {
+                            output.append(transaction).append("\n");
+                        }
+                    }
+                    break;
+                case 3:
+                    for (String transaction : ledger) {
+                        LocalDate transactionDate = LocalDate.parse(transaction.split("\\|")[0]);
+                        if (transactionDate.getYear() == year) {
+                            output.append(transaction).append("\n");
+                        }
+                    }
+                    break;
+                case 4:
+                    for (String transaction : ledger) {
+                        LocalDate transactionDate = LocalDate.parse(transaction.split("\\|")[0]);
+                        if (transactionDate.getYear() == year - 1) {
+                            output.append(transaction).append("\n");
+                        }
+                    }
+                    break;
+                case 5:
+                    System.out.print("\nPlease enter the vendor name: ");
+                    String vendorName = scanner.nextLine().toLowerCase();
+                    for (String transaction : ledger) {
+                        String vendor = transaction.split("\\|")[3].toLowerCase();
+                        if (vendor.contains(vendorName)) {
+                            output.append(transaction).append("\n");
+                        }
+                    }
+                    break;
+                case 0:
+                    isRunning = false;
+                    break;
+                default:
+                    System.out.println("Please select a valid option...");
+                    break;
+            }
+            if (output.isEmpty() && customReportChoice != 0) {
+                System.out.println("Sorry, there were no transactions matching your search criteria...");
+            } else {
+                System.out.println(output);
+            }
         }
     }
 
@@ -159,7 +203,7 @@ public class Ledger {
         String description = depositInfo[0];
         String vendor = depositInfo[1];
         double amount = Double.parseDouble(depositInfo[2]);
-        String info = String.format("%s | %s | %s | -%.2f\n", formattedDate, description, vendor, amount);
+        String info = String.format("%s|%s|%s|-%.2f\n", formattedDate, description, vendor, amount);
         enterInfoIntoLedger(info);
     }
 
@@ -172,7 +216,7 @@ public class Ledger {
         String description = paymentInfo[0];
         String vendor = paymentInfo[1];
         double amount = Double.parseDouble(paymentInfo[2]);
-        String info = String.format("%s | %s | %s | %.2f\n", formattedDate, description, vendor, amount);
+        String info = String.format("%s|%s|%s|%.2f\n", formattedDate, description, vendor, amount);
         enterInfoIntoLedger(info);
     }
 
