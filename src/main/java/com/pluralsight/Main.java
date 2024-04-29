@@ -34,13 +34,13 @@ public class Main {
                         break;
                     case "L", "l":
                         System.out.print("\nAccessing Ledger");
-                        Thread.sleep(1000);
+                        Thread.sleep(500);
                         System.out.print("...");
                         Thread.sleep(1000);
                         System.out.print("...");
                         Thread.sleep(1000);
                         System.out.print("...\n");
-                        Thread.sleep(1000);
+                        Thread.sleep(500);
                         Ledger.homeScreen(scanner);
                         break;
                     case "X", "x":

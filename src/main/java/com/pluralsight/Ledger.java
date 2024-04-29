@@ -4,6 +4,7 @@ import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -32,7 +33,8 @@ public class Ledger {
                 [A] Show all entries
                 [E] Display only expenses (credit)
                 [D] Display only payments (debit)
-                [R] Custom reports...
+                [R] Reports...
+                [C] Custom search...
                 [H] Home
                 """
             );
@@ -42,6 +44,7 @@ public class Ledger {
                 case "E", "e" -> getLedgerData("expenses");
                 case "D", "d" -> getLedgerData("payments");
                 case "R", "r" -> customReports(scanner);
+                case "C", "c" -> customSearch(scanner);
                 case "H", "h" -> isRunning = false;
                 default -> System.out.println("Please enter a valid choice...");
             }
@@ -65,49 +68,37 @@ public class Ledger {
 
     private static void getLedgerData(String filter) {
         List<String> ledgerData = new ArrayList<>();
-        switch (filter) {
-            case "none":
-                try (FileReader reader = new FileReader("ledger/transactions.csv")) {
-                    BufferedReader br = new BufferedReader(reader);
-                    String input;
+        try (FileReader reader = new FileReader("ledger/transactions.csv")) {
+            BufferedReader br = new BufferedReader(reader);
+            String input;
+            switch (filter) {
+                case "none":
                     while ((input = br.readLine()) != null) {
                         ledgerData.add(input);
                     }
-                } catch (IOException e) {
-                    throw new RuntimeException("File not found");
-                }
-                displayLedgerData(ledgerData);
-                break;
-            case "expenses":
-                try (FileReader reader = new FileReader("ledger/transactions.csv")) {
-                    BufferedReader br = new BufferedReader(reader);
-                    String input;
+                    displayLedgerData(ledgerData);
+                    break;
+                case "expenses":
                     while ((input = br.readLine()) != null) {
                         String[] categories = input.split("\\|");
                         if (categories[categories.length - 1].contains("-")) {
                             ledgerData.add(input);
                         }
                     }
-                } catch (IOException e) {
-                    throw new RuntimeException("File not found");
-                }
-                displayLedgerData(ledgerData);
-                break;
-            case "payments":
-                try (FileReader reader = new FileReader("ledger/transactions.csv")) {
-                    BufferedReader br = new BufferedReader(reader);
-                    String input;
+                    displayLedgerData(ledgerData);
+                    break;
+                case "payments":
                     while ((input = br.readLine()) != null) {
                         String[] categories = input.split("\\|");
                         if (!categories[categories.length - 1].contains("-")) {
                             ledgerData.add(input);
                         }
                     }
-                } catch (IOException e) {
-                    throw new RuntimeException("File not found");
-                }
-                displayLedgerData(ledgerData);
-                break;
+                    displayLedgerData(ledgerData);
+                    break;
+            }
+        } catch (IOException e) {
+            System.err.println("File not found");
         }
     }
 
@@ -199,6 +190,37 @@ public class Ledger {
     }
 
 
+    public static void customSearch(Scanner scanner) {
+        System.out.println("Please leave field blank if you do not want to search with that filter...");
+            String startDateSearch = null;
+            String endDateSearch = null;
+        try {
+            System.out.print("Start Date (yyyy-mm-dd): ");
+            startDateSearch = scanner.nextLine();
+            System.out.print("End Date (yyyy-mm-dd): ");
+            endDateSearch = scanner.nextLine();
+        } catch (DateTimeParseException e) {
+            System.out.println("There was an error parsing the given date...");
+            e.printStackTrace();
+        }
+        System.out.print("Description: ");
+        String descriptionSearch = scanner.nextLine();
+        System.out.print("Vendor: ");
+        String vendorSearch = scanner.nextLine();
+        System.out.print("Amount:  ");
+        Double amountSearch = scanner.nextDouble();
+        scanner.nextLine();
+
+        System.out.println(startDateSearch);
+        System.out.println(endDateSearch);
+        System.out.println(descriptionSearch);
+        System.out.println(vendorSearch);
+        System.out.println(amountSearch);
+        // how to filter? filter progressively. by start date, then end date, then desc, then vendor, then amount.
+        // Should take inputs and if they are blank, don't use them to filter the ledger.
+    }
+
+
     public static void addExpense(String[] depositInfo) {
 //        date | time | description | vendor | amount
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd|HH:mm:ss");
@@ -210,13 +232,13 @@ public class Ledger {
         String info = String.format("%s|%s|%s|-%.2f\n", formattedDate, description, vendor, amount);
         try {
             enterInfoIntoLedger(info);
-            Thread.sleep(1000);
+            Thread.sleep(500);
             System.out.print("\n...");
             Thread.sleep(1000);
             System.out.print("...");
             Thread.sleep(1000);
             System.out.print("...");
-            Thread.sleep(1000);
+            Thread.sleep(500);
             System.out.println("\n\nSuccessfully added expense!\n\n");
         } catch (Exception e) {
             throw new RuntimeException("Sorry there was an issue entering your expense" + e);
@@ -235,13 +257,13 @@ public class Ledger {
         String info = String.format("%s|%s|%s|%.2f\n", formattedDate, description, vendor, amount);
         try {
             enterInfoIntoLedger(info);
-            Thread.sleep(1000);
+            Thread.sleep(500);
             System.out.print("\n...");
             Thread.sleep(1000);
             System.out.print("...");
             Thread.sleep(1000);
             System.out.print("...");
-            Thread.sleep(1000);
+            Thread.sleep(500);
             System.out.println("\n\nSuccessfully added payment!\n\n");
         } catch (Exception e) {
             throw new RuntimeException("Sorry there was an issue entering your payment" + e);
