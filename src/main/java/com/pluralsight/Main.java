@@ -36,9 +36,9 @@ public class Main {
                         System.out.print("\nAccessing Ledger");
                         Thread.sleep(500);
                         System.out.print("...");
-                        Thread.sleep(500);
+                        Thread.sleep(1000);
                         System.out.print("...");
-                        Thread.sleep(500);
+                        Thread.sleep(1000);
                         System.out.print("...\n");
                         Thread.sleep(500);
                         Ledger.homeScreen(scanner);
