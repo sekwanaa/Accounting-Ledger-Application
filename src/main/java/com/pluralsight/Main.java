@@ -9,7 +9,7 @@ public class Main {
         try (Scanner scanner = new Scanner(System.in)) {
             boolean isRunning = true;
             while (isRunning) {
-                System.out.print("\n\n\n\n\n\n\n\n\n\n\n\n\n\nWelcome to the Account Ledger Application. \nThe goal of this application is to track expenses and income in the ledger.\n\nWhat would you like to do today?\n\n[E] Add an Expense\n[I] Add Income\n[L] Access Ledger\n[X] Exit\n\nEnter Choice: ");
+                System.out.print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWelcome to the Account Ledger Application. \nThe goal of this application is to track expenses and income in the ledger.\n\nWhat would you like to do today?\n\n[E] Add an Expense\n[I] Add Income\n[L] Access Ledger\n[X] Exit\n\nEnter Choice: ");
                 String input = scanner.nextLine();
                 switch (input) {
                     case "E", "e":
@@ -65,7 +65,7 @@ public class Main {
                 }
                 System.out.print("Enter amount: $");
                 if (scanner.hasNextDouble()) {
-                    double amount = scanner.nextDouble();
+                    double amount = Math.abs(scanner.nextDouble());
                     scanner.nextLine();
                     return new String[]{description, vendor, Double.toString(amount)};
                 } else {
@@ -90,7 +90,7 @@ public class Main {
                 }
                 System.out.print("Enter amount: $");
                 if (scanner.hasNextDouble()) {
-                    double amount = scanner.nextDouble();
+                    double amount = Math.abs(scanner.nextDouble());
                     scanner.nextLine();
                     return new String[]{description, vendor, Double.toString(amount)};
                 } else {
