@@ -177,7 +177,7 @@ public class Ledger {
                     String endDateSearch = scanner.hasNextLine() ? scanner.nextLine() : "";
                     System.out.print("Transaction description: ");
                     String descriptionSearch = scanner.hasNextLine() ? scanner.nextLine() : "";
-                    System.out.print("Transaction vendor: ");
+                    System.out.print("Transaction vendor/payer: ");
                     String vendorSearch = scanner.hasNextLine() ? scanner.nextLine() : "";
                     System.out.print("Transaction amount:  ");
                     String amountSearch = scanner.hasNextLine() ? scanner.nextLine() : "";

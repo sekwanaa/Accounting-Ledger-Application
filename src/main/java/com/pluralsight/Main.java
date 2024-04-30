@@ -83,7 +83,7 @@ public class Main {
                 if (description.equalsIgnoreCase("x")) {
                     return null;
                 }
-                System.out.print("Enter vendor: ");
+                System.out.print("Enter payer: ");
                 String vendor = scanner.nextLine();
                 if (vendor.equalsIgnoreCase("x")) {
                     return null;
