@@ -39,4 +39,4 @@ build/
 .DS_Store
 
 ### Other ###
-*.csv
+ledger/*.csv

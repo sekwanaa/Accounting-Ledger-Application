@@ -9,7 +9,7 @@ public class Main {
         try (Scanner scanner = new Scanner(System.in)) {
             boolean isRunning = true;
             while (isRunning) {
-                System.out.print("\n\n\n\n\n\n\n\n\n\n\n\n\n\nWelcome to the Account Ledger Application. What would you like to do today?\n\n[E]Add Expense (credit)\n[I]Add Income (debit)\n[L] Access Ledger\n[X]Exit\n\nEnter Choice: ");
+                System.out.print("\n\n\n\n\n\n\n\n\n\n\n\n\n\nWelcome to the Account Ledger Application. What would you like to do today?\n\n[E] Add Expense (credit)\n[I] Add Income (debit)\n[L] Access Ledger\n[X] Exit\n\nEnter Choice: ");
                 String input = scanner.nextLine();
                 switch (input) {
                     case "E", "e":
