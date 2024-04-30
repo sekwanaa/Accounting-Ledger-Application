@@ -16,9 +16,9 @@ public class Ledger {
             System.out.print("""
 
                 [A] Show all entries
-                [E] Display only expenses (credit)
-                [D] Display only payments (debit)
-                [R] Reports...
+                [E] Display only expenses
+                [I] Display only income
+                [R] Custom Reports...
                 [H] Home
                 
                 Enter Choice:\s""");
@@ -26,7 +26,7 @@ public class Ledger {
             switch (input) {
                 case "A", "a" -> getLedgerData("none");
                 case "E", "e" -> getLedgerData("expenses");
-                case "D", "d" -> getLedgerData("payments");
+                case "I", "i" -> getLedgerData("income");
                 case "R", "r" -> customReports(scanner);
                 case "H", "h" -> isRunning = false;
                 default -> System.out.println("Please enter a valid choice...");
@@ -70,7 +70,7 @@ public class Ledger {
                     }
                     displayLedgerData(ledgerData);
                     break;
-                case "payments":
+                case "income":
                     while ((input = br.readLine()) != null) {
                         String[] categories = input.split("\\|");
                         if (!categories[categories.length - 1].contains("-")) {
@@ -92,7 +92,7 @@ public class Ledger {
                 System.out.println(transaction);
             }
         }
-        System.out.println("\n--------------------------------------------------------------------");
+        System.out.println("\n--------------------------------------------------------------------\n");
     }
 
     private static void customReports(Scanner scanner) {
@@ -110,8 +110,12 @@ public class Ledger {
                 [0] Previous screen
                 
                 Enter Choice:\s""");
-            int customReportChoice = scanner.nextInt();
+            int customReportChoice = scanner.hasNextInt() ? scanner.nextInt() : -19962;
             scanner.nextLine();
+            if (customReportChoice == -19962) {
+                System.out.println("That is not a valid choice...");
+                break;
+            }
 
             LocalDate date = LocalDate.now();
             int month = date.getMonthValue();
@@ -164,23 +168,18 @@ public class Ledger {
                     break;
 
                 case 6:
-                    System.out.println("\nPlease leave field blank if you do not want to search with that filter...");
+                    System.out.print("\n-----------------Leave field blank if you do not want to search with that filter-----------------\n");
+                    System.out.println("-----------------------------------Everything is optional----------------------------------------\n");
                     Map<String, String> filters = new HashMap<>();
-                    String startDateSearch = "";
-                    String endDateSearch = "";
-                    try {
-                        System.out.print("Start Date (yyyy-mm-dd): ");
-                        startDateSearch = scanner.nextLine();
-                        System.out.print("End Date (yyyy-mm-dd): ");
-                        endDateSearch = scanner.nextLine();
-                    } catch (DateTimeParseException e) {
-                        System.out.println("There was an error parsing the given date...");
-                    }
-                    System.out.print("Description: ");
+                    System.out.print("Start Date i.e 1999-02-18: ");
+                    String startDateSearch = scanner.hasNextLine() ? scanner.nextLine() : "";
+                    System.out.print("End Date i.e 1997-10-29: ");
+                    String endDateSearch = scanner.hasNextLine() ? scanner.nextLine() : "";
+                    System.out.print("Transaction description: ");
                     String descriptionSearch = scanner.hasNextLine() ? scanner.nextLine() : "";
-                    System.out.print("Vendor: ");
+                    System.out.print("Transaction vendor: ");
                     String vendorSearch = scanner.hasNextLine() ? scanner.nextLine() : "";
-                    System.out.print("Amount:  ");
+                    System.out.print("Transaction amount:  ");
                     String amountSearch = scanner.hasNextLine() ? scanner.nextLine() : "";
 
                     if (!Objects.equals(startDateSearch, "")) {
