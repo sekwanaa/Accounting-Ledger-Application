@@ -19,7 +19,7 @@ The user also has the ability to create reports such as:
 
 ### Home Screen 
 
-![image](https://github.com/sekwanaa/Accounting-Ledger-Application/assets/112197395/37d59eac-8a3c-4058-b650-06a88429b491)
+![image](https://github.com/sekwanaa/Accounting-Ledger-Application/assets/112197395/11df1bf6-0820-41d7-9772-8ae76f1ad1a8)
 
 <details> 
   
