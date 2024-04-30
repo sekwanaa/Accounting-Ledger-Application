@@ -9,7 +9,7 @@ public class Main {
         try (Scanner scanner = new Scanner(System.in)) {
             boolean isRunning = true;
             while (isRunning) {
-                System.out.print("\n\n\n\n\n\n\n\n\n\n\n\n\n\nWelcome to the Account Ledger Application. What would you like to do today?\n\n[E]Add Expense (credit)\n[P]Make Payment (debit)\n[L]Ledger\n[X]Exit\n\nEnter Choice: ");
+                System.out.print("\n\n\n\n\n\n\n\n\n\n\n\n\n\nWelcome to the Account Ledger Application. What would you like to do today?\n\n[E]Add Expense (credit)\n[I]Add Income (debit)\n[L] Access Ledger\n[X]Exit\n\nEnter Choice: ");
                 String input = scanner.nextLine();
                 switch (input) {
                     case "E", "e":
@@ -18,7 +18,7 @@ public class Main {
                             Ledger.addExpense(collectedDepositInfo);
                         }
                         break;
-                    case "P", "p":
+                    case "I", "i":
                         String[] collectedPaymentInfo = collectInfo(scanner);
                         if (collectedPaymentInfo != null) {
                             Ledger.addPayment(collectedPaymentInfo);
@@ -50,17 +50,27 @@ public class Main {
 
 
     public static String[] collectInfo(Scanner scanner) {
-        System.out.print("Enter item description: ");
+        System.out.println("Enter 'x' at anytime to cancel action...");
+        System.out.print("\nEnter a description: ");
         String description = scanner.nextLine();
+        if (description.equalsIgnoreCase("x")) {
+            return null;
+        }
         System.out.print("Enter vendor: ");
         String vendor = scanner.nextLine();
+        if (vendor.equalsIgnoreCase("x")) {
+            return null;
+        }
         System.out.print("Enter amount: $");
         if (scanner.hasNextDouble()) {
             double amount = scanner.nextDouble();
             scanner.nextLine();
             return new String[]{description, vendor, Double.toString(amount)};
         } else {
-            scanner.nextLine();
+            String amount = scanner.nextLine();
+            if (amount.equalsIgnoreCase("x")) {
+                return null;
+            }
             System.out.println("\nSorry, this is not the correct input type.");
             return null;
         }
