@@ -43,7 +43,12 @@ The user also has the ability to create reports such as:
 
 ![image](https://github.com/sekwanaa/Accounting-Ledger-Application/assets/112197395/b4c0f24a-a792-40af-983d-4c0f3cca475e)
 
-### Showing All Entries
+
+<details>
+
+  **<summary>Showing Entries</summary>**
+
+### All Entries
 
 ![image](https://github.com/sekwanaa/Accounting-Ledger-Application/assets/112197395/7dc15397-9eb9-453a-ad3b-2ba9fac5777d)
 
@@ -54,6 +59,12 @@ The user also has the ability to create reports such as:
 ### Displaying Only Payments
 
 ![image](https://github.com/sekwanaa/Accounting-Ledger-Application/assets/112197395/8f50fc1d-08cb-4f49-bee8-325cb5b31d4d)
+  
+</details>
+
+<details>
+
+  **<summary>Custom Reports</summary>**
 
 ### Custom Report Screen
 
@@ -82,20 +93,9 @@ The user also has the ability to create reports such as:
 ### Custom Search
 
 ![image](https://github.com/sekwanaa/Accounting-Ledger-Application/assets/112197395/91830bf4-cc79-42c1-8f7b-68bade55e3c1)
-
+  
 </details>
 
-<details>
-
-  **<summary> Error Handling </summary>**
-
-![image](https://github.com/sekwanaa/Accounting-Ledger-Application/assets/112197395/9a89b107-a713-45a2-90cc-e4e67e453e7b)
-
-![image](https://github.com/sekwanaa/Accounting-Ledger-Application/assets/112197395/d3d68b08-2d42-444c-ac72-0d14df8c7210)
-
-![image](https://github.com/sekwanaa/Accounting-Ledger-Application/assets/112197395/a270d3fa-d281-404c-9963-61228579a885)
-
-  
 </details>
 
 ### Interesting Piece of Code
@@ -117,3 +117,17 @@ private static List<String> getLedgerData() {
   return ledgerData;
 }
 ```
+
+<details>
+
+  **<summary> Error Handling </summary>**
+
+![image](https://github.com/sekwanaa/Accounting-Ledger-Application/assets/112197395/9a89b107-a713-45a2-90cc-e4e67e453e7b)
+
+![image](https://github.com/sekwanaa/Accounting-Ledger-Application/assets/112197395/d3d68b08-2d42-444c-ac72-0d14df8c7210)
+
+![image](https://github.com/sekwanaa/Accounting-Ledger-Application/assets/112197395/a270d3fa-d281-404c-9963-61228579a885)
+
+  
+</details>
+
