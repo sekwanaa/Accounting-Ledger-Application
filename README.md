@@ -9,10 +9,17 @@ The user also has the ability to create reports such as:
    *  Year to date
    *  Previous year
    *  Search by vendor
+   *  Custom search...
+       * Custom search allows for users to input optional search fields such as:
+         * start date
+         * end date
+         * transaction description
+         * transaction vendor
+         * transaction amount
 
 ### Home Screen 
 
-![image](https://github.com/sekwanaa/Accounting-Ledger-Application/assets/112197395/ab9eac89-93e7-4b95-a37d-2ff929e87c50)
+![image](https://github.com/sekwanaa/Accounting-Ledger-Application/assets/112197395/b7a52574-20a4-4414-a01f-c43f805069c2)
 
 <details> 
   
@@ -38,19 +45,19 @@ The user also has the ability to create reports such as:
 
 ### Showing All Entries
 
-![image](https://github.com/sekwanaa/Accounting-Ledger-Application/assets/112197395/0ad402c6-fb2a-4637-82df-cf960cd802e0)
+![image](https://github.com/sekwanaa/Accounting-Ledger-Application/assets/112197395/7dc15397-9eb9-453a-ad3b-2ba9fac5777d)
 
 ### Displaying Only Expenses
 
-![image](https://github.com/sekwanaa/Accounting-Ledger-Application/assets/112197395/826a16e4-7617-4c03-bb72-133f49fff611)
+![image](https://github.com/sekwanaa/Accounting-Ledger-Application/assets/112197395/bcdf4ca0-dc7a-4071-9ca1-fcc19529d109)
 
 ### Displaying Only Payments
 
-![image](https://github.com/sekwanaa/Accounting-Ledger-Application/assets/112197395/e4ff2eaf-f6f0-4de9-9da1-8c6a07b43ed2)
+![image](https://github.com/sekwanaa/Accounting-Ledger-Application/assets/112197395/8f50fc1d-08cb-4f49-bee8-325cb5b31d4d)
 
 ### Custom Report Screen
 
-![image](https://github.com/sekwanaa/Accounting-Ledger-Application/assets/112197395/567e6f3e-e9cf-43e1-a45b-cefed24decb1)
+![image](https://github.com/sekwanaa/Accounting-Ledger-Application/assets/112197395/338fe662-e99e-47c9-8af9-0cf319d90afe)
 
 ### Month to Date
 
@@ -71,6 +78,10 @@ The user also has the ability to create reports such as:
 ### Search by Vendor
 
 ![image](https://github.com/sekwanaa/Accounting-Ledger-Application/assets/112197395/cd83343e-f84d-4e3f-af8c-b6893dfa77f0)
+
+### Custom Search
+
+![image](https://github.com/sekwanaa/Accounting-Ledger-Application/assets/112197395/91830bf4-cc79-42c1-8f7b-68bade55e3c1)
 
 </details>
 
