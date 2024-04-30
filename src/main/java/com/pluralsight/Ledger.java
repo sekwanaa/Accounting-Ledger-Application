@@ -5,27 +5,12 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Ledger {
 
 
     public static void homeScreen(Scanner scanner) {
-        /*
-         * All
-         * Deposits
-         * Payments
-         * Reports
-         *  - MTD
-         *  - previous month
-         *  - YTD
-         *  - previous year
-         *  - search by vendor
-         *  - previous screen
-         * Home
-         * */
         boolean isRunning = true;
         while(isRunning) {
             System.out.println("""
@@ -34,7 +19,6 @@ public class Ledger {
                 [E] Display only expenses (credit)
                 [D] Display only payments (debit)
                 [R] Reports...
-                [C] Custom search...
                 [H] Home
                 """
             );
@@ -44,7 +28,6 @@ public class Ledger {
                 case "E", "e" -> getLedgerData("expenses");
                 case "D", "d" -> getLedgerData("payments");
                 case "R", "r" -> customReports(scanner);
-                case "C", "c" -> customSearch(scanner);
                 case "H", "h" -> isRunning = false;
                 default -> System.out.println("Please enter a valid choice...");
             }
@@ -103,11 +86,13 @@ public class Ledger {
     }
 
     private static void displayLedgerData(List<String> ledgerData) {
+        System.out.println("\n----------------------------TRANSACTIONS----------------------------\n");
         for (String transaction : ledgerData) {
             if (transaction != null) {
                 System.out.println(transaction);
             }
         }
+        System.out.println("\n--------------------------------------------------------------------");
     }
 
     private static void customReports(Scanner scanner) {
@@ -121,6 +106,7 @@ public class Ledger {
                 [3] Year to date
                 [4] Previous year
                 [5] Search by vendor
+                [6] Custom search...
                 [0] Previous screen
                 """);
             int customReportChoice = scanner.nextInt();
@@ -130,13 +116,14 @@ public class Ledger {
             int month = date.getMonthValue();
             int year = date.getYear();
             List<String> ledger = getLedgerData();
-            StringBuilder output = new StringBuilder();
+//            StringBuilder output = new StringBuilder();
+            List<String> output = new ArrayList<>();
             switch (customReportChoice) {
                 case 1:
                     for (String transaction : ledger) {
                         LocalDate transactionDate = LocalDate.parse(transaction.split("\\|")[0]);
                         if (transactionDate.getMonthValue() == month && transactionDate.getYear() == year) {
-                            output.append(transaction).append("\n");
+                            output.add(transaction);
                         }
                     }
                     break;
@@ -144,7 +131,7 @@ public class Ledger {
                     for (String transaction : ledger) {
                         LocalDate transactionDate = LocalDate.parse(transaction.split("\\|")[0]);
                         if (transactionDate.getMonthValue() == month-1 && transactionDate.getYear() == year) {
-                            output.append(transaction).append("\n");
+                            output.add(transaction);
                         }
                     }
                     break;
@@ -152,7 +139,7 @@ public class Ledger {
                     for (String transaction : ledger) {
                         LocalDate transactionDate = LocalDate.parse(transaction.split("\\|")[0]);
                         if (transactionDate.getYear() == year) {
-                            output.append(transaction).append("\n");
+                            output.add(transaction);
                         }
                     }
                     break;
@@ -160,7 +147,7 @@ public class Ledger {
                     for (String transaction : ledger) {
                         LocalDate transactionDate = LocalDate.parse(transaction.split("\\|")[0]);
                         if (transactionDate.getYear() == year - 1) {
-                            output.append(transaction).append("\n");
+                            output.add(transaction);
                         }
                     }
                     break;
@@ -170,9 +157,49 @@ public class Ledger {
                     for (String transaction : ledger) {
                         String vendor = transaction.split("\\|")[3].toLowerCase();
                         if (vendor.contains(vendorName)) {
-                            output.append(transaction).append("\n");
+                            output.add(transaction);
                         }
                     }
+                    break;
+
+                case 6:
+                    System.out.println("Please leave field blank if you do not want to search with that filter...");
+                    Map<String, String> filters = new HashMap<>();
+                    String startDateSearch = "";
+                    String endDateSearch = "";
+                    try {
+                        System.out.print("Start Date (yyyy-mm-dd): ");
+                        startDateSearch = scanner.nextLine();
+                        System.out.print("End Date (yyyy-mm-dd): ");
+                        endDateSearch = scanner.nextLine();
+                    } catch (DateTimeParseException e) {
+                        System.out.println("There was an error parsing the given date...");
+                    }
+                    System.out.print("Description: ");
+                    String descriptionSearch = scanner.hasNextLine() ? scanner.nextLine() : "";
+                    System.out.print("Vendor: ");
+                    String vendorSearch = scanner.hasNextLine() ? scanner.nextLine() : "";
+                    System.out.print("Amount:  ");
+                    String amountSearch = scanner.hasNextLine() ? scanner.nextLine() : "";
+
+                    if (!Objects.equals(startDateSearch, "")) {
+                        filters.put("startDateSearch", startDateSearch);
+                    }
+                    if (!Objects.equals(endDateSearch, "")) {
+                        filters.put("endDateSearch", endDateSearch);
+                    }
+                    if (!Objects.equals(descriptionSearch, "")) {
+                        filters.put("descriptionSearch", descriptionSearch);
+                    }
+                    if (!Objects.equals(vendorSearch, "")) {
+                        filters.put("vendorSearch", vendorSearch);
+                    }
+                    if (!Objects.equals(amountSearch, "")) {
+                        filters.put("amountSearch", amountSearch);
+                    }
+
+                    List<String> filteredLedger = filterSearch(filters);
+                    output.addAll(filteredLedger);
                     break;
                 case 0:
                     isRunning = false;
@@ -184,44 +211,43 @@ public class Ledger {
             if (output.isEmpty() && customReportChoice != 0) {
                 System.out.println("Sorry, there were no transactions matching your search criteria...");
             } else {
-                System.out.println(output);
+                displayLedgerData(output);
             }
         }
     }
 
 
-    public static void customSearch(Scanner scanner) {
-        System.out.println("Please leave field blank if you do not want to search with that filter...");
-            String startDateSearch = null;
-            String endDateSearch = null;
-        try {
-            System.out.print("Start Date (yyyy-mm-dd): ");
-            startDateSearch = scanner.nextLine();
-            System.out.print("End Date (yyyy-mm-dd): ");
-            endDateSearch = scanner.nextLine();
-        } catch (DateTimeParseException e) {
-            System.out.println("There was an error parsing the given date...");
-            e.printStackTrace();
-        }
-        System.out.print("Description: ");
-        String descriptionSearch = scanner.nextLine();
-        System.out.print("Vendor: ");
-        String vendorSearch = scanner.nextLine();
-        System.out.print("Amount:  ");
-        Double amountSearch = scanner.nextDouble();
-        scanner.nextLine();
+    public static List<String> filterSearch(Map<String, String> filters) {
+        List<String> filteredData = new ArrayList<>();
+        List<String> data = getLedgerData();
+        for (String row : data) {
+            String[] categories = row.split("\\|");
 
-        System.out.println(startDateSearch);
-        System.out.println(endDateSearch);
-        System.out.println(descriptionSearch);
-        System.out.println(vendorSearch);
-        System.out.println(amountSearch);
-        // how to filter? filter progressively. by start date, then end date, then desc, then vendor, then amount.
-        // Should take inputs and if they are blank, don't use them to filter the ledger.
+            try {
+                if (!LocalDate.parse(categories[0]).isAfter(LocalDate.parse(filters.getOrDefault("startDateSearch", "")))) {
+                    continue;
+                }
+                if (!LocalDate.parse(categories[0]).isBefore(LocalDate.parse(filters.getOrDefault("endDateSearch", "")))) {
+                    continue;
+                }
+            } catch (DateTimeParseException ignored) {}
+
+            if (!categories[2].contains(filters.getOrDefault("descriptionSearch", ""))) {
+                continue;
+            }
+            if (!categories[3].contains(filters.getOrDefault("vendorSearch", ""))) {
+                continue;
+            }
+            if (!categories[4].contains(filters.getOrDefault("amountSearch", ""))) {
+                continue;
+            }
+            filteredData.add(row);
+        }
+        return filteredData;
     }
 
 
-    public static void addExpense(String[] depositInfo) {
+        public static void addExpense(String[] depositInfo) {
 //        date | time | description | vendor | amount
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd|HH:mm:ss");
         LocalDateTime dt = LocalDateTime.now();
