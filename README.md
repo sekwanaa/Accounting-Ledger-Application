@@ -19,7 +19,7 @@ The user also has the ability to create reports such as:
 
 ### Home Screen 
 
-![image](https://github.com/sekwanaa/Accounting-Ledger-Application/assets/112197395/b7a52574-20a4-4414-a01f-c43f805069c2)
+![image](https://github.com/sekwanaa/Accounting-Ledger-Application/assets/112197395/37d59eac-8a3c-4058-b650-06a88429b491)
 
 <details> 
   
@@ -27,11 +27,11 @@ The user also has the ability to create reports such as:
 
 ### Adding Expenses
 
-![image](https://github.com/sekwanaa/Accounting-Ledger-Application/assets/112197395/ff8cc083-8a21-4218-876c-804933f0cd8c)
+![image](https://github.com/sekwanaa/Accounting-Ledger-Application/assets/112197395/f1e935f5-e85a-4f7f-b174-46f141375c33)
 
 ### Adding Payments
 
-![image](https://github.com/sekwanaa/Accounting-Ledger-Application/assets/112197395/21cf6fb3-1817-42a6-808b-0187be7d600e)
+![image](https://github.com/sekwanaa/Accounting-Ledger-Application/assets/112197395/6772f76a-89c4-4955-a5a4-da1b53eb9915)
 
 </details>
 
