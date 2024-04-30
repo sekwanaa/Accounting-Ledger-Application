@@ -13,15 +13,15 @@ public class Ledger {
     public static void homeScreen(Scanner scanner) {
         boolean isRunning = true;
         while(isRunning) {
-            System.out.println("""
+            System.out.print("""
 
                 [A] Show all entries
                 [E] Display only expenses (credit)
                 [D] Display only payments (debit)
                 [R] Reports...
                 [H] Home
-                """
-            );
+                
+                Enter Choice:\s""");
             String input = scanner.nextLine();
             switch (input) {
                 case "A", "a" -> getLedgerData("none");
@@ -98,7 +98,7 @@ public class Ledger {
     private static void customReports(Scanner scanner) {
         boolean isRunning = true;
         while (isRunning) {
-            System.out.println("""
+            System.out.print("""
                 
                 Which custom report would you like to view?
                 [1] Month to date
@@ -108,7 +108,8 @@ public class Ledger {
                 [5] Search by vendor
                 [6] Custom search...
                 [0] Previous screen
-                """);
+                
+                Enter Choice:\s""");
             int customReportChoice = scanner.nextInt();
             scanner.nextLine();
 
@@ -163,7 +164,7 @@ public class Ledger {
                     break;
 
                 case 6:
-                    System.out.println("Please leave field blank if you do not want to search with that filter...");
+                    System.out.println("\nPlease leave field blank if you do not want to search with that filter...");
                     Map<String, String> filters = new HashMap<>();
                     String startDateSearch = "";
                     String endDateSearch = "";
