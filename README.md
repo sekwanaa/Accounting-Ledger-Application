@@ -41,8 +41,7 @@ The user also has the ability to create reports such as:
   
 ### Main Screen
 
-![image](https://github.com/sekwanaa/Accounting-Ledger-Application/assets/112197395/b4c0f24a-a792-40af-983d-4c0f3cca475e)
-
+![image](https://github.com/sekwanaa/Accounting-Ledger-Application/assets/112197395/1d73fe29-01db-4f9e-b8a6-9d3d095ace6a)
 
 <details>
 
@@ -50,16 +49,16 @@ The user also has the ability to create reports such as:
 
 ### All Entries
 
-![image](https://github.com/sekwanaa/Accounting-Ledger-Application/assets/112197395/7dc15397-9eb9-453a-ad3b-2ba9fac5777d)
+![image](https://github.com/sekwanaa/Accounting-Ledger-Application/assets/112197395/f78c3734-1a4c-4423-bb23-974d1650214e)
 
 ### Displaying Only Expenses
 
-![image](https://github.com/sekwanaa/Accounting-Ledger-Application/assets/112197395/bcdf4ca0-dc7a-4071-9ca1-fcc19529d109)
+![image](https://github.com/sekwanaa/Accounting-Ledger-Application/assets/112197395/86700f15-fb33-4151-8c0e-cfde691f95e0)
 
-### Displaying Only Payments
+### Displaying Only Income
 
-![image](https://github.com/sekwanaa/Accounting-Ledger-Application/assets/112197395/8f50fc1d-08cb-4f49-bee8-325cb5b31d4d)
-  
+![image](https://github.com/sekwanaa/Accounting-Ledger-Application/assets/112197395/ee5ddca5-f2ff-4733-bcef-4976a77f0db7)
+
 </details>
 
 <details>
@@ -72,30 +71,30 @@ The user also has the ability to create reports such as:
 
 ### Month to Date
 
-![image](https://github.com/sekwanaa/Accounting-Ledger-Application/assets/112197395/cd1d34f1-d5cd-4a8f-bf57-be2cf0b70a2d)
-
-### Previous Month
-
-![image](https://github.com/sekwanaa/Accounting-Ledger-Application/assets/112197395/55110012-3f93-4bf6-8c9b-29ec82d34f40)
-
-### Year to Date
-
-![image](https://github.com/sekwanaa/Accounting-Ledger-Application/assets/112197395/e88a5769-e6d8-4397-9e9c-84360b0ebf66)
+![image](https://github.com/sekwanaa/Accounting-Ledger-Application/assets/112197395/ac99ecdb-e8f0-428f-93f1-ed8d6d522ecf)
 
 ### Previous Year
 
-![image](https://github.com/sekwanaa/Accounting-Ledger-Application/assets/112197395/e73aa50c-4a60-41e0-a864-93c205010aea)
+![image](https://github.com/sekwanaa/Accounting-Ledger-Application/assets/112197395/94c35aea-efa9-48ea-be5b-ffef466679a3)
 
 ### Search by Vendor
 
-![image](https://github.com/sekwanaa/Accounting-Ledger-Application/assets/112197395/cd83343e-f84d-4e3f-af8c-b6893dfa77f0)
+![image](https://github.com/sekwanaa/Accounting-Ledger-Application/assets/112197395/9b8b67a6-1a8d-480c-bdd4-1158c13f7140)
 
 ### Custom Search
 
-![image](https://github.com/sekwanaa/Accounting-Ledger-Application/assets/112197395/91830bf4-cc79-42c1-8f7b-68bade55e3c1)
-  
+![image](https://github.com/sekwanaa/Accounting-Ledger-Application/assets/112197395/b135912b-5bab-44de-952f-36a624511e22)
+
 </details>
 
+</details>
+
+<details>
+
+  **<summary>Viewing Balance</summary>**
+
+![image](https://github.com/sekwanaa/Accounting-Ledger-Application/assets/112197395/ad0ce8a6-52c7-4fec-bfc2-74b5ab9395c7)
+  
 </details>
 
 ### Interesting Piece of Code
