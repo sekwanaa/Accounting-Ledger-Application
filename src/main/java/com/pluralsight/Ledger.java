@@ -57,35 +57,27 @@ public class Ledger {
         try (FileReader reader = new FileReader("ledger/transactions.csv")) {
             BufferedReader br = new BufferedReader(reader);
             String input;
-            switch (filter) {
-                case "none":
-                    while ((input = br.readLine()) != null) {
-                        String[] categories = input.split("\\|");
-                        Transaction transaction = new Transaction(LocalDate.parse(categories[0]), LocalTime.parse(categories[1]), categories[2], categories[3], Double.parseDouble(categories[4]));
+            while ((input = br.readLine()) != null) {
+                String[] categories = input.split("\\|");
+                Transaction transaction = new Transaction(LocalDate.parse(categories[0]), LocalTime.parse(categories[1]), categories[2], categories[3], Double.parseDouble(categories[4]));
+                switch (filter) {
+                    case "none":
                         ledgerData.add(transaction);
-                    }
-                    displayLedgerData(ledgerData);
-                    break;
-                case "expenses":
-                    while ((input = br.readLine()) != null) {
-                        String[] categories = input.split("\\|");
-                        Transaction transaction = new Transaction(LocalDate.parse(categories[0]), LocalTime.parse(categories[1]), categories[2], categories[3], Double.parseDouble(categories[4]));
+                        displayLedgerData(ledgerData);
+                        break;
+                    case "expenses":
                         if (transaction.amount() < 0) {
                             ledgerData.add(transaction);
                         }
-                    }
-                    displayLedgerData(ledgerData);
-                    break;
-                case "income":
-                    while ((input = br.readLine()) != null) {
-                        String[] categories = input.split("\\|");
-                        Transaction transaction = new Transaction(LocalDate.parse(categories[0]), LocalTime.parse(categories[1]), categories[2], categories[3], Double.parseDouble(categories[4]));
+                        displayLedgerData(ledgerData);
+                        break;
+                    case "income":
                         if (transaction.amount() > 0) {
                             ledgerData.add(transaction);
                         }
-                    }
-                    displayLedgerData(ledgerData);
-                    break;
+                        displayLedgerData(ledgerData);
+                        break;
+                }
             }
         } catch (IOException e) {
             System.err.println("File not found");
@@ -252,7 +244,7 @@ public class Ledger {
     }
 
 
-        public static void addExpense(String[] depositInfo) {
+        public static void addExpense(String[] depositInfo, Scanner scanner) {
 //        date | time | description | vendor | amount
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd|HH:mm:ss");
         LocalDateTime dt = LocalDateTime.now();
@@ -271,13 +263,15 @@ public class Ledger {
             System.out.print("...");
             Thread.sleep(500);
             System.out.println("\n\nSuccessfully added expense!\n\n");
+            System.out.println("Press ENTER to continue");
+            scanner.nextLine();
         } catch (Exception e) {
             throw new RuntimeException("Sorry there was an issue entering your expense" + e);
         }
     }
 
 
-    public static void addPayment(String[] paymentInfo) {
+    public static void addPayment(String[] paymentInfo, Scanner scanner) {
 //        date | time | description | vendor | amount
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd|HH:mm:ss");
         LocalDateTime dt = LocalDateTime.now();
@@ -296,6 +290,8 @@ public class Ledger {
             System.out.print("...");
             Thread.sleep(500);
             System.out.println("\n\nSuccessfully added payment!\n\n");
+            System.out.println("Press ENTER to continue");
+            scanner.nextLine();
         } catch (Exception e) {
             throw new RuntimeException("Sorry there was an issue entering your payment" + e);
         }

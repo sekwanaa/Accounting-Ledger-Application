@@ -15,13 +15,13 @@ public class Main {
                     case "E", "e":
                         String[] collectedDepositInfo = collectInfo(scanner, "expense");
                         if (collectedDepositInfo != null) {
-                            Ledger.addExpense(collectedDepositInfo);
+                            Ledger.addExpense(collectedDepositInfo, scanner);
                         }
                         break;
                     case "I", "i":
                         String[] collectedPaymentInfo = collectInfo(scanner, "income");
                         if (collectedPaymentInfo != null) {
-                            Ledger.addPayment(collectedPaymentInfo);
+                            Ledger.addPayment(collectedPaymentInfo, scanner);
                         }
                         break;
                     case "L", "l":
