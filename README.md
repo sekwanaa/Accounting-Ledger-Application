@@ -100,22 +100,43 @@ The user also has the ability to create reports such as:
 
 ### Interesting Piece of Code
 
-> I chose this piece of code because it extracted a method that would be repeated many times and created an arrayList to be updated.
+> I chose this piece of code because it uses a simple ternary operator, and also easily checks each transaction for whether it satisfies all the filters. As soon as one does not satisfy it, it moves on. Only when it satisfies all the search criteria will it add it to the output.
 
 ``` java
-private static List<String> getLedgerData() {
-  List<String> ledgerData = new ArrayList<>();
-  try (FileReader reader = new FileReader("ledger/transactions.csv")) {
-    BufferedReader br = new BufferedReader(reader);
-    String input;
-    while ((input = br.readLine()) != null) {
-      ledgerData.add(input);
-    }
-  } catch (IOException e) {
-    throw new RuntimeException("File not found");
+case 6:
+  System.out.print("\n-----------------Leave field blank if you do not want to search with that filter-----------------\n");
+  System.out.println("-----------------------------------Everything is optional----------------------------------------\n");
+  Map<String, String> filters = new HashMap<>();
+  System.out.print("Start Date i.e 1999-02-18: ");
+  String startDateSearch = scanner.hasNextLine() ? scanner.nextLine() : "";
+  System.out.print("End Date i.e 1997-10-29: ");
+  String endDateSearch = scanner.hasNextLine() ? scanner.nextLine() : "";
+  System.out.print("Transaction description: ");
+  String descriptionSearch = scanner.hasNextLine() ? scanner.nextLine() : "";
+  System.out.print("Transaction vendor/payer: ");
+  String vendorSearch = scanner.hasNextLine() ? scanner.nextLine() : "";
+  System.out.print("Transaction amount:  ");
+  String amountSearch = scanner.hasNextLine() ? scanner.nextLine() : "";
+
+  if (!Objects.equals(startDateSearch, "")) {
+    filters.put("startDateSearch", startDateSearch);
   }
-  return ledgerData;
-}
+  if (!Objects.equals(endDateSearch, "")) {
+    filters.put("endDateSearch", endDateSearch);
+  }
+  if (!Objects.equals(descriptionSearch, "")) {
+    filters.put("descriptionSearch", descriptionSearch);
+  }
+  if (!Objects.equals(vendorSearch, "")) {
+    filters.put("vendorSearch", vendorSearch);
+  }
+  if (!Objects.equals(amountSearch, "")) {
+    filters.put("amountSearch", amountSearch);
+  }
+
+  List<String> filteredLedger = filterSearch(filters);
+  output.addAll(filteredLedger);
+  break;
 ```
 
 <details>
