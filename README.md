@@ -1,7 +1,7 @@
 # Accounting Ledger Application
 
 The goal of this application is to allow the user to add and view accounting transactions.\
-It allows the user to add expenses and payments.\
+It allows the user to add expenses, payments, and to view their current balance.\
 Additionally, the user is able to view their transactions. If they would like, they can view all transactions, or filter them by payments or expenses.\
 The user also has the ability to create reports such as:
    *  Month to date
