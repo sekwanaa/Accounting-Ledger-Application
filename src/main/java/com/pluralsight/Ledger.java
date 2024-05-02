@@ -3,6 +3,7 @@ package com.pluralsight;
 import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.*;
@@ -35,13 +36,15 @@ public class Ledger {
     }
 
 
-    private static List<String> getLedgerData() {
-        List<String> ledgerData = new ArrayList<>();
+    private static List<Transaction> getLedgerData() {
+        List<Transaction> ledgerData = new ArrayList<>();
         try (FileReader reader = new FileReader("ledger/transactions.csv")) {
             BufferedReader br = new BufferedReader(reader);
             String input;
             while ((input = br.readLine()) != null) {
-                ledgerData.add(input);
+                String[] categories = input.split("\\|");
+                Transaction transaction = new Transaction(LocalDate.parse(categories[0]), LocalTime.parse(categories[1]), categories[2], categories[3], Double.parseDouble(categories[4]));
+                ledgerData.add(transaction);
             }
         } catch (IOException e) {
             throw new RuntimeException("File not found");
@@ -50,22 +53,25 @@ public class Ledger {
     }
 
     private static void getLedgerData(String filter) {
-        List<String> ledgerData = new ArrayList<>();
+        List<Transaction> ledgerData = new ArrayList<>();
         try (FileReader reader = new FileReader("ledger/transactions.csv")) {
             BufferedReader br = new BufferedReader(reader);
             String input;
             switch (filter) {
                 case "none":
                     while ((input = br.readLine()) != null) {
-                        ledgerData.add(input);
+                        String[] categories = input.split("\\|");
+                        Transaction transaction = new Transaction(LocalDate.parse(categories[0]), LocalTime.parse(categories[1]), categories[2], categories[3], Double.parseDouble(categories[4]));
+                        ledgerData.add(transaction);
                     }
                     displayLedgerData(ledgerData);
                     break;
                 case "expenses":
                     while ((input = br.readLine()) != null) {
                         String[] categories = input.split("\\|");
-                        if (categories[categories.length - 1].contains("-")) {
-                            ledgerData.add(input);
+                        Transaction transaction = new Transaction(LocalDate.parse(categories[0]), LocalTime.parse(categories[1]), categories[2], categories[3], Double.parseDouble(categories[4]));
+                        if (transaction.amount() < 0) {
+                            ledgerData.add(transaction);
                         }
                     }
                     displayLedgerData(ledgerData);
@@ -73,8 +79,9 @@ public class Ledger {
                 case "income":
                     while ((input = br.readLine()) != null) {
                         String[] categories = input.split("\\|");
-                        if (!categories[categories.length - 1].contains("-")) {
-                            ledgerData.add(input);
+                        Transaction transaction = new Transaction(LocalDate.parse(categories[0]), LocalTime.parse(categories[1]), categories[2], categories[3], Double.parseDouble(categories[4]));
+                        if (transaction.amount() > 0) {
+                            ledgerData.add(transaction);
                         }
                     }
                     displayLedgerData(ledgerData);
@@ -85,11 +92,11 @@ public class Ledger {
         }
     }
 
-    private static void displayLedgerData(List<String> ledgerData) {
+    private static void displayLedgerData(List<Transaction> ledgerData) {
         System.out.println("\n----------------------------TRANSACTIONS----------------------------\n");
-        for (String transaction : ledgerData) {
+        for (Transaction transaction : ledgerData) {
             if (transaction != null) {
-                System.out.println(transaction);
+                System.out.printf("%s|%s|%s|%s|%.2f\n", transaction.date(), transaction.time(), transaction.description(), transaction.vendor(), transaction.amount());
             }
         }
         System.out.println("\n--------------------------------------------------------------------\n");
@@ -120,37 +127,37 @@ public class Ledger {
             LocalDate date = LocalDate.now();
             int month = date.getMonthValue();
             int year = date.getYear();
-            List<String> ledger = getLedgerData();
+            List<Transaction> ledger = getLedgerData();
 //            StringBuilder output = new StringBuilder();
-            List<String> output = new ArrayList<>();
+            List<Transaction> output = new ArrayList<>();
             switch (customReportChoice) {
                 case 1:
-                    for (String transaction : ledger) {
-                        LocalDate transactionDate = LocalDate.parse(transaction.split("\\|")[0]);
+                    for (Transaction transaction : ledger) {
+                        LocalDate transactionDate = transaction.date();
                         if (transactionDate.getMonthValue() == month && transactionDate.getYear() == year) {
                             output.add(transaction);
                         }
                     }
                     break;
                 case 2:
-                    for (String transaction : ledger) {
-                        LocalDate transactionDate = LocalDate.parse(transaction.split("\\|")[0]);
+                    for (Transaction transaction : ledger) {
+                        LocalDate transactionDate = transaction.date();
                         if (transactionDate.getMonthValue() == month-1 && transactionDate.getYear() == year) {
                             output.add(transaction);
                         }
                     }
                     break;
                 case 3:
-                    for (String transaction : ledger) {
-                        LocalDate transactionDate = LocalDate.parse(transaction.split("\\|")[0]);
+                    for (Transaction transaction : ledger) {
+                        LocalDate transactionDate = transaction.date();
                         if (transactionDate.getYear() == year) {
                             output.add(transaction);
                         }
                     }
                     break;
                 case 4:
-                    for (String transaction : ledger) {
-                        LocalDate transactionDate = LocalDate.parse(transaction.split("\\|")[0]);
+                    for (Transaction transaction : ledger) {
+                        LocalDate transactionDate = transaction.date();
                         if (transactionDate.getYear() == year - 1) {
                             output.add(transaction);
                         }
@@ -159,8 +166,8 @@ public class Ledger {
                 case 5:
                     System.out.print("\nPlease enter the vendor name: ");
                     String vendorName = scanner.nextLine().toLowerCase();
-                    for (String transaction : ledger) {
-                        String vendor = transaction.split("\\|")[3].toLowerCase();
+                    for (Transaction transaction : ledger) {
+                        String vendor = transaction.vendor().toLowerCase();
                         if (vendor.contains(vendorName)) {
                             output.add(transaction);
                         }
@@ -198,7 +205,7 @@ public class Ledger {
                         filters.put("amountSearch", amountSearch);
                     }
 
-                    List<String> filteredLedger = filterSearch(filters);
+                    List<Transaction> filteredLedger = filterSearch(filters);
                     output.addAll(filteredLedger);
                     break;
                 case 0:
@@ -217,28 +224,26 @@ public class Ledger {
     }
 
 
-    public static List<String> filterSearch(Map<String, String> filters) {
-        List<String> filteredData = new ArrayList<>();
-        List<String> data = getLedgerData();
-        for (String row : data) {
-            String[] categories = row.split("\\|");
-
+    public static List<Transaction> filterSearch(Map<String, String> filters) {
+        List<Transaction> filteredData = new ArrayList<>();
+        List<Transaction> data = getLedgerData();
+        for (Transaction row : data) {
             try {
-                if (!LocalDate.parse(categories[0]).isAfter(LocalDate.parse(filters.getOrDefault("startDateSearch", "")))) {
+                if (!row.date().isAfter(LocalDate.parse(filters.getOrDefault("startDateSearch", "")))) {
                     continue;
                 }
-                if (!LocalDate.parse(categories[0]).isBefore(LocalDate.parse(filters.getOrDefault("endDateSearch", "")))) {
+                if (!row.date().isBefore(LocalDate.parse(filters.getOrDefault("endDateSearch", "")))) {
                     continue;
                 }
             } catch (DateTimeParseException ignored) {}
 
-            if (!categories[2].contains(filters.getOrDefault("descriptionSearch", ""))) {
+            if (!row.description().contains(filters.getOrDefault("descriptionSearch", ""))) {
                 continue;
             }
-            if (!categories[3].contains(filters.getOrDefault("vendorSearch", ""))) {
+            if (!row.vendor().contains(filters.getOrDefault("vendorSearch", ""))) {
                 continue;
             }
-            if (!categories[4].contains(filters.getOrDefault("amountSearch", ""))) {
+            if (!Double.toString(row.amount()).contains(filters.getOrDefault("amountSearch", ""))) {
                 continue;
             }
             filteredData.add(row);
