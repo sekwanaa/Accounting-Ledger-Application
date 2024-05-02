@@ -1,25 +1,19 @@
-# Accounting Ledger Application
+# Capstone 1 - Accounting Ledger Application
 
 The goal of this application is to allow the user to add and view accounting transactions.\
 It allows the user to add expenses, payments, and to view their current balance.\
 Additionally, the user is able to view their transactions. If they would like, they can view all transactions, or filter them by payments or expenses.\
-The user also has the ability to create reports such as:
-   *  Month to date
-   *  Previous month
-   *  Year to date
-   *  Previous year
-   *  Search by vendor
-   *  Custom search...
-       * Custom search allows for users to input optional search fields such as:
-         * start date
-         * end date
-         * transaction description
-         * transaction vendor
-         * transaction amount
+For now, instead of using a database, each transaction is stores in a file called transactions.csv.
 
-### Home Screen 
+## Home Screen 
+This is the main screen that users will encounter when working with the application.\
+Users are able to:
+ - Add an expense
+ - Add income
+ - Access the ledger screen
+ - View their current balance
 
-![image](https://github.com/sekwanaa/Accounting-Ledger-Application/assets/112197395/11df1bf6-0820-41d7-9772-8ae76f1ad1a8)
+![image](https://github.com/sekwanaa/Accounting-Ledger-Application/assets/112197395/f03c4356-9511-435f-a8bb-7b131d6b0562)
 
 <details> 
   
@@ -35,11 +29,12 @@ The user also has the ability to create reports such as:
 
 </details>
 
-<details>
+## Accessing the Ledger
+The ledger is what stores user transactions, whether it be an expense or income. The user is able to view all transactions, only expenses, or only income. Users are able to also view custom pre-defined reports to further fine tune their ability to view transactions.\
+Custom reports include the ability to search:
 
- **<summary> Accessing the ledger </summary>**
-  
-### Main Screen
+Month to Date &nbsp;&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;&nbsp; Year to Date  &nbsp;&nbsp;&nbsp;&nbsp; |  &nbsp;&nbsp;&nbsp;&nbsp; Search by Vendor\
+Previous Month &nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;&nbsp; Previous Year &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;&nbsp; Custom Search...
 
 ![image](https://github.com/sekwanaa/Accounting-Ledger-Application/assets/112197395/1d73fe29-01db-4f9e-b8a6-9d3d095ace6a)
 
@@ -87,17 +82,12 @@ The user also has the ability to create reports such as:
 
 </details>
 
-</details>
-
-<details>
-
-  **<summary>Viewing Balance</summary>**
+## Viewing Balance
+Users are able to view the current balance of their ledger
 
 ![image](https://github.com/sekwanaa/Accounting-Ledger-Application/assets/112197395/ad0ce8a6-52c7-4fec-bfc2-74b5ab9395c7)
-  
-</details>
 
-### Interesting Piece of Code
+## Interesting Piece of Code
 
 > I chose this piece of code because it uses a simple ternary operator, and also easily checks each transaction for whether it satisfies all the filters. As soon as one does not satisfy it, it moves on. Only when it satisfies all the search criteria will it add it to the output.
 
@@ -138,16 +128,10 @@ case 6:
   break;
 ```
 
-<details>
-
-  **<summary> Error Handling </summary>**
+## Error Handling
 
 ![image](https://github.com/sekwanaa/Accounting-Ledger-Application/assets/112197395/9a89b107-a713-45a2-90cc-e4e67e453e7b)
 
 ![image](https://github.com/sekwanaa/Accounting-Ledger-Application/assets/112197395/d3d68b08-2d42-444c-ac72-0d14df8c7210)
 
 ![image](https://github.com/sekwanaa/Accounting-Ledger-Application/assets/112197395/a270d3fa-d281-404c-9963-61228579a885)
-
-  
-</details>
-
