@@ -57,27 +57,35 @@ public class Ledger {
         try (FileReader reader = new FileReader("ledger/transactions.csv")) {
             BufferedReader br = new BufferedReader(reader);
             String input;
-            while ((input = br.readLine()) != null) {
-                String[] categories = input.split("\\|");
-                Transaction transaction = new Transaction(LocalDate.parse(categories[0]), LocalTime.parse(categories[1]), categories[2], categories[3], Double.parseDouble(categories[4]));
-                switch (filter) {
-                    case "none":
+            switch (filter) {
+                case "none":
+                    while ((input = br.readLine()) != null) {
+                        String[] categories = input.split("\\|");
+                        Transaction transaction = new Transaction(LocalDate.parse(categories[0]), LocalTime.parse(categories[1]), categories[2], categories[3], Double.parseDouble(categories[4]));
                         ledgerData.add(transaction);
-                        displayLedgerData(ledgerData);
-                        break;
-                    case "expenses":
+                    }
+                    displayLedgerData(ledgerData);
+                    break;
+                case "expenses":
+                    while ((input = br.readLine()) != null) {
+                        String[] categories = input.split("\\|");
+                        Transaction transaction = new Transaction(LocalDate.parse(categories[0]), LocalTime.parse(categories[1]), categories[2], categories[3], Double.parseDouble(categories[4]));
                         if (transaction.amount() < 0) {
                             ledgerData.add(transaction);
                         }
-                        displayLedgerData(ledgerData);
-                        break;
-                    case "income":
+                    }
+                    displayLedgerData(ledgerData);
+                    break;
+                case "income":
+                    while ((input = br.readLine()) != null) {
+                        String[] categories = input.split("\\|");
+                        Transaction transaction = new Transaction(LocalDate.parse(categories[0]), LocalTime.parse(categories[1]), categories[2], categories[3], Double.parseDouble(categories[4]));
                         if (transaction.amount() > 0) {
                             ledgerData.add(transaction);
                         }
-                        displayLedgerData(ledgerData);
-                        break;
-                }
+                    }
+                    displayLedgerData(ledgerData);
+                    break;
             }
         } catch (IOException e) {
             System.err.println("File not found");
@@ -85,13 +93,21 @@ public class Ledger {
     }
 
     private static void displayLedgerData(List<Transaction> ledgerData) {
-        System.out.println("\n----------------------------TRANSACTIONS----------------------------\n");
+        System.out.println("\n-----------------TRANSACTIONS-----------------");
+        System.out.println("Total transactions: " + ledgerData.size());
         for (Transaction transaction : ledgerData) {
             if (transaction != null) {
-                System.out.printf("%s|%s|%s|%s|%.2f\n", transaction.date(), transaction.time(), transaction.description(), transaction.vendor(), transaction.amount());
+                System.out.printf("""
+                        ==============++==============================
+                        | Date        || %s
+                        | Time        || %s
+                        | Description || %s
+                        | Vendor      || %s
+                        | Amount      || %.2f
+                        """, transaction.date(), transaction.time(), transaction.description(), transaction.vendor(), transaction.amount());
             }
         }
-        System.out.println("\n--------------------------------------------------------------------\n");
+        System.out.println("==============++==============================");
     }
 
     private static void customReports(Scanner scanner) {
@@ -304,5 +320,40 @@ public class Ledger {
         } catch (IOException e) {
             throw new RuntimeException("File not found: " + e);
         }
+    }
+
+
+    public static void displayBalance() {
+        List<Transaction> ledger = getLedgerData();
+        LocalDate date = LocalDate.now();
+        double expenses = 0;
+        double income = 0;
+        for (Transaction transaction : ledger) {
+            if (transaction.amount() < 0) {
+                expenses += Math.abs(transaction.amount());
+            } else if (transaction.amount() > 0) {
+                income += transaction.amount();
+            }
+        }
+        double totalBalance = income - expenses;
+        System.out.printf("""
+
+                ===================++==============
+                 Date              || %s
+                -------------------++--------------
+                 Expenses          || $-%.2f
+                 Income            || $ %.2f
+                -------------------++--------------
+                """, date, expenses, income);
+        if (totalBalance < 0) {
+            System.out.printf("""
+                 Total             || $%.2f
+                """, totalBalance);
+        } else {
+            System.out.printf("""
+                 Total             || $ %.2f
+                 """, totalBalance);
+        }
+        System.out.println("===================++==============");
     }
 }

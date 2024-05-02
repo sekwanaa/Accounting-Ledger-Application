@@ -9,7 +9,7 @@ public class Main {
         try (Scanner scanner = new Scanner(System.in)) {
             boolean isRunning = true;
             while (isRunning) {
-                System.out.print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWelcome to the Account Ledger Application. \nThe goal of this application is to track expenses and income in the ledger.\n\nWhat would you like to do today?\n\n[E] Add an Expense\n[I] Add Income\n[L] Access Ledger\n[X] Exit\n\nEnter Choice: ");
+                System.out.print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWelcome to the Account Ledger Application. \nThe goal of this application is to track expenses and income in the ledger.\n\nWhat would you like to do today?\n\n[E] Add an Expense\n[I] Add Income\n[L] Access Ledger\n[B] View Balance\n[X] Exit\n\nEnter Choice: ");
                 String input = scanner.nextLine();
                 switch (input) {
                     case "E", "e":
@@ -34,6 +34,19 @@ public class Main {
                         System.out.print("...\n");
                         Thread.sleep(500);
                         Ledger.homeScreen(scanner);
+                        break;
+                    case "B", "b":
+                        System.out.print("Calculating Balance");
+                        Thread.sleep(500);
+                        System.out.print("...");
+                        Thread.sleep(1000);
+                        System.out.print("...");
+                        Thread.sleep(1000);
+                        System.out.print("...\n");
+                        Thread.sleep(500);
+                        Ledger.displayBalance();
+                        System.out.println("Press ENTER to continue...");
+                        scanner.nextLine();
                         break;
                     case "X", "x":
                         System.out.println("Exiting ...");
